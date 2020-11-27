@@ -1,0 +1,66 @@
+<!doctype html>
+<!-- Starter template taken from: https://getbootstrap.com/docs/4.5/getting-started/introduction/-->
+<html lang="en">
+	<head>
+    	<!-- Required meta tags -->
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    	<!-- Bootstrap CSS -->
+    	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    	<title>Hello, world!</title>
+  	</head>
+  	<body>	
+		<h1>Hello, from index.html!</h1>
+
+		<!-- Text box for input -->
+    	<input class="form-control" type="text" id="input" placeholder="Input goes here " readonly>
+		<!-- Buttons for model choices -->
+    	<button type="button" class="btn btn-primary" id="model1-button">Model 1</button>
+		<button type="button" class="btn btn-success" id="model2-button">Model 2</button>
+		<!-- Text box for output -->
+		<input class="form-control" type="text" id="output" placeholder="Output goes here " readonly>
+
+    	<!-- Optional JavaScript; choose one of the two! -->
+
+    	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper)
+    	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+		-->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+				
+		<!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+		-->
+		
+		<script>    	
+			$(" #model1-button ").click(function(e) {
+				e.preventDefault();
+				console.log("You clicked button"+1) //ok
+				$.getJSON( "/api/model1", function( data ) {
+					// data is variable name for whole response, I want its value
+					console.log(data); // returns {"Model 1 value": 1} in console
+					console.log("data.value "+data.value); // returns data.value undefined in console
+					$( "#output" ).val(data);	// returns [object Object] in correct location
+					//$( "#output").val(data.value) // placeholder text remains in correct location
+					console.log(JSON.stringify(data.value)); // returns undefined in console
+					console.log(parseInt(data.value));
+				});
+			});
+	
+			$("#model2-button").click(function(e) {
+				e.preventDefault();
+				console.log("You clicked button"+2) //ok
+				$.getJSON( "/api/model2", function( data ) {
+					console.log(data) // ok
+					$( "#output" ).val(data.value); // not ok
+				});
+			});
+		</script>
+
+  	</body>
+	</html>
