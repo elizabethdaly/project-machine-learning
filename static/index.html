@@ -14,22 +14,33 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <h1>Hello, from index.html!</h1>
+    <h1>index.html</h1>
     <div class="container">
         <div class="row">
-          <div class="col-sm">
-            <input class="form-control" id="output" type="text" placeholder="Output goes here.." readonly>
-          </div>
+          	<div class="col-sm">
+				<h1>Power predictions</h1>		
+				<label for="input">Input wind speed (m/s)</label>
+				<input class="form-control" id="input" type="text" placeholder="Wind speed here..." >
+				<small id="passwordHelpInline" class="text-muted">
+					Wind speed must be in range 1-24 m/s.
+				</small>
+          	</div>
         </div>
         <div class="row">
-          <div class="col-sm">
-            <button type="button" class="btn btn-success" id="model1-button">Model 1</button>
-          </div>
-          <div class="col-sm">
-            <button type="button" class="btn btn-primary" id="model2-button">Model 2</button>
-          </div>
-        </div>
-      </div>
+          	<div class="col-sm">
+            	<button type="button" class="btn btn-success" id="model1-button">Model 1</button>
+          	</div>
+          	<div class="col-sm">
+            	<button type="button" class="btn btn-primary" id="model2-button">Model 2</button>
+          	</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">
+				<label for="output">Output power (kW)</label>
+			  	<input class="form-control" id="output" type="text" placeholder="Output goes here.." readonly>
+			</div>
+		</div>
+    </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -46,21 +57,59 @@
 
 
     <script>
-        // Adapted from stack overflow posts.
+
+		// https://stackoverflow.com/questions/18042133/check-if-input-is-number-or-letter-javascript
+		// Function to check if a number has been entered
+		function is_number(input) {
+        	if(input === '')
+            	return false;
+        	let regex = new RegExp(/[^0-9]/, 'g');
+       		return (input.match(regex) === null);
+    	}
+	
+		// On clicking button get ip, feed to model, create output
         $("#model1-button").click(function(e) {
             e.preventDefault();
-            $.getJSON("/api/model1", function(data) {
+			// Get the input
+			var ip = document.getElementById("input").value;//by id
+			// Check that it's a number
+			if (!is_number(ip)){
+				alert("This must be a positive number.");
+			}
+			// console.log(ip)
+			// Check range. Power = 0 if at extremes.
+			if (ip > 1 && ip < 24) {
+				$.getJSON("/api/model1", function(data) {
                 $('#output').val(data.value);
-                //alert(JSON.stringify(data)); // pop up ok
-                console.log(data)
-            });
+                console.log(data) //checking
+				});
+            } else {
+				alert("Wind speed is out of model range.");
+				$('#output').val(0);
+			}
         });
+
+		// On clicking button get ip, feed to model, create output
         $("#model2-button").click(function(e) {
             e.preventDefault();
-            $.getJSON("/api/model2", function(data) {
+			// Get the input
+			var ip = document.getElementById("input").value;//by id
+			// Check that it's a number 
+			if (!is_number(ip)){
+				alert("This must be a positive number.");
+			}
+			// console.log(ip)
+
+			// Check range. Power = 0 if at extremes.
+            if (ip > 1 && ip < 24) {
+				$.getJSON("/api/model2", function(data) {
                 $('#output').val(data.value);
-                console.log(data)
-            });
+                console.log(data) //checking
+				});
+            } else {
+				alert("Wind speed is out of model range.");
+				$('#output').val(0);
+			}
         });
     </script>
   </body>
