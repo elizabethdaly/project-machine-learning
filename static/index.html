@@ -11,34 +11,82 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Machine Learning</title>
   </head>
   <body>
-    <h1>index.html</h1>
+	<!--h1>index.html</h1>-->
+	
     <div class="container">
+
+		<div class="row">
+			<div class="col-sm">
+				<h1>Wind Turbine Power Prediction</h1>
+				<p>Description of what this page is for goes here.</p>
+
+				<ul class="list-group">
+					<li class="list-group-item">Model 1 is ..</li>
+					<li class="list-group-item">Model 2 is </li>
+					<li class="list-group-item">Model 3 is </li>
+				</ul>
+
+			</div>
+		</div>
+
+		<!-- add some vertical space -->
+		<div style="margin-top:25px"></div>
+
+		<!-- Space for the input -->
+		<!-- two dummy cols so that input boc is 1/3 of width to match 3 model buttons -->
         <div class="row">
-          	<div class="col-sm">
-				<h1>Power predictions</h1>		
+
+          	<div class="col-sm">	
 				<label for="input">Input wind speed (m/s)</label>
-				<input class="form-control" id="input" type="text" placeholder="Wind speed here..." >
+				<input class="form-control" id="input" type="text" placeholder="Wind speed here (m/s)..." >
 				<small id="passwordHelpInline" class="text-muted">
-					Wind speed must be in range 1-24 m/s.
+					Must be an integer from 1 - 24
 				</small>
-          	</div>
-        </div>
+			</div>
+
+			<div class="col-sm">
+			</div>
+			<div class="col-sm">
+			</div>
+
+		</div>
+
+		<!-- add some vertical space -->
+		<div style="margin-top:25px"></div>
+
+		<!-- 3 buttons for the three models -->
         <div class="row">
           	<div class="col-sm">
             	<button type="button" class="btn btn-success" id="model1-button">Model 1</button>
           	</div>
           	<div class="col-sm">
             	<button type="button" class="btn btn-primary" id="model2-button">Model 2</button>
+			</div>
+			<div class="col-sm">
+            	<button type="button" class="btn btn-warning" id="model3-button">Model 3</button>
           	</div>
 		</div>
+
+		<!-- Space for the three predictions -->
 		<div class="row">
 			<div class="col-sm">
 				<label for="output">Output power (kW)</label>
-			  	<input class="form-control" id="output" type="text" placeholder="Output goes here.." readonly>
+				<input class="form-control" id="output1" type="text" placeholder="Output goes here.." readonly>
 			</div>
+
+			<div class="col-sm">
+				<label for="output">Output power (kW)</label>
+				<input class="form-control" id="output2" type="text" placeholder="Output goes here.." readonly>
+			</div>
+
+			<div class="col-sm">
+				<label for="output">Output power (kW)</label>
+				<input class="form-control" id="output3" type="text" placeholder="Output goes here.." readonly>
+			</div>
+
 		</div>
     </div>
 
@@ -67,7 +115,7 @@
        		return (input.match(regex) === null);
     	}
 	
-		// On clicking button get ip, feed to model, create output
+		// On clicking button get ip, feed to model1, create output
         $("#model1-button").click(function(e) {
             e.preventDefault();
 			// Get the input
@@ -79,17 +127,17 @@
 			// console.log(ip)
 			// Check range. Power = 0 if at extremes.
 			if (ip > 1 && ip < 24) {
-				$.getJSON("/api/model1", function(data) {
-                $('#output').val(data.value);
+				$.getJSON("/api/model1/"+encodeURI(ip), function(data) {
+                $('#output1').val(data.value);
                 console.log(data) //checking
 				});
             } else {
 				alert("Wind speed is out of model range.");
-				$('#output').val(0);
+				$('#output1').val(0);
 			}
         });
 
-		// On clicking button get ip, feed to model, create output
+		// On clicking button get ip, feed to model2, create output
         $("#model2-button").click(function(e) {
             e.preventDefault();
 			// Get the input
@@ -102,15 +150,34 @@
 
 			// Check range. Power = 0 if at extremes.
             if (ip > 1 && ip < 24) {
-				$.getJSON("/api/model2", function(data) {
-                $('#output').val(data.value);
-                console.log(data) //checking
+				$.getJSON("/api/model2/"+encodeURI(ip), function(result) {
+                $('#output2').val(result.value);
+                console.log(result) //checking
 				});
             } else {
 				alert("Wind speed is out of model range.");
-				$('#output').val(0);
+				$('#output2').val(0);
 			}
+		});
+		
+
+		// On clicking button get ip, feed to model3, create output
+        $("#model3-button").click(function(e) {
+			e.preventDefault();
+			
+			// Get the input
+			var ip = document.getElementById("input").value; // Get wind speed by id, = a number
+			console.log(ip) // check it's a number
+
+			// need to pass this ip to the app route, result is what is returned from request
+			$.getJSON("/api/model3/"+encodeURI(ip), function(result) {
+			// Fn returns a str. Do str to float, two decimal places.
+			$('#output3').val(parseFloat(result.value).toFixed(2)); 
+			// Checking - ok.
+            console.log(result) 
+			});
         });
+
     </script>
   </body>
 </html>

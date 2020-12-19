@@ -24,6 +24,8 @@ These instructions will get you a copy of the project up and running on your loc
 - [SciPy](https://www.scipy.org/)
 - [Pandas](https://pandas.pydata.org/)
 - [Scikit-learn](https://scikit-learn.org/stable/)
+- [TensorFlow]()
+- [Docker]()
 
 ### Installing
 Download and install the Anaconda distribution of Python from the link above. The other packages (Jupyter notebook, Pandas, matplotlib, NumPy, and Scikit-learn) come as part of that distribution.
