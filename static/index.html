@@ -127,9 +127,9 @@
 			// console.log(ip)
 			// Check range. Power = 0 if at extremes.
 			if (ip > 1 && ip < 24) {
-				$.getJSON("/api/model1/"+encodeURI(ip), function(data) {
-                $('#output1').val(data.value);
-                console.log(data) //checking
+				$.getJSON("/api/model1/"+encodeURI(ip), function(result) {
+                $('#output1').val(parseFloat(result.value).toFixed(2)); // float x.xx
+                console.log(result) //checking
 				});
             } else {
 				alert("Wind speed is out of model range.");
@@ -151,7 +151,7 @@
 			// Check range. Power = 0 if at extremes.
             if (ip > 1 && ip < 24) {
 				$.getJSON("/api/model2/"+encodeURI(ip), function(result) {
-                $('#output2').val(result.value);
+                $('#output2').val(parseFloat(result.value).toFixed(2)); // float x.xx
                 console.log(result) //checking
 				});
             } else {
@@ -166,13 +166,13 @@
 			e.preventDefault();
 			
 			// Get the input
-			var ip = document.getElementById("input").value; // Get wind speed by id, = a number
+			var ip = document.getElementById("input").value; // Get wind speed by id of input box, = a number
 			console.log(ip) // check it's a number
 
 			// need to pass this ip to the app route, result is what is returned from request
 			$.getJSON("/api/model3/"+encodeURI(ip), function(result) {
 			// Fn returns a str. Do str to float, two decimal places.
-			$('#output3').val(parseFloat(result.value).toFixed(2)); 
+			$('#output3').val(parseFloat(result.value).toFixed(2)); // float x.xx
 			// Checking - ok.
             console.log(result) 
 			});

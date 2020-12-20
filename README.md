@@ -59,8 +59,16 @@ https://github.com/elizabethdaly/tasks-machine-learning/blob/master/project-mach
 - All images intended for inclusion in this README or the Jupyter notebook are located in the **img** subdirectory of this repository.
 - The _powerproduction.csv_ data set is located in the **data** subdirectory.
 - The _index.html_ file for for the web server front end in located in the **static** subdirectory.
-- The _server.py_ file for ......
+- The _server.py_ file for ...... at this level.
 - Some references are stored in the **references** subdirectory.
+- model files are ... located **models** subdirectory. (comment out save in JNB so don't overwrite my models)
+- all rough work/old files in **rough** subdirectory.
+
+## How to run the server instructions
+
+## Docker instructions
+
+## venv ?
 
 ## Author
 Elizabeth Daly for HDip in Data Analytics 2019/2020.
