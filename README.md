@@ -34,8 +34,6 @@ Download and install the Anaconda distribution of Python from the link above. Th
 This project is hosted on [GitHub](https://github.com/) at 
 https://github.com/elizabethdaly/project-machine-learning
 
-The analysis takes the form of a single Jupyter notebook of filename **project-machine-learning.ipynb**
-
 ### Instructions for cloning the repository
 A repository on GitHub exists as a remote repository. You can clone this repository to create a local copy on your computer by following these instructions:
 1. On GitHub, navigate to the main page of the repository https://github.com/elizabethdaly/project-machine-learning
@@ -55,20 +53,28 @@ Alternatively, one can view a static version of the notebook using [Jupyter Nbvi
 https://github.com/elizabethdaly/tasks-machine-learning/blob/master/project-machine-learning.ipynb
 ```
 
-## Additional files
-- All images intended for inclusion in this README or the Jupyter notebook are located in the **img** subdirectory of this repository.
-- The _powerproduction.csv_ data set is located in the **data** subdirectory.
-- The _index.html_ file for for the web server front end in located in the **static** subdirectory.
-- The _server.py_ file for ...... at this level.
-- Some references are stored in the **references** subdirectory.
-- model files are ... located **models** subdirectory. (comment out save in JNB so don't overwrite my models)
-- all rough work/old files in **rough** subdirectory.
+## Files
+- Data analysis and model training/evaluation in a single Jupyter notebook _project-machine-learning.ipynb_
+- Data set _powerproduction.csv_ in **data** subdirectory.
+- _index.html_ file for for the web server front end in **static** subdirectory.
+- _MLserver.py_ file for flask server at repository top level.
+- Some references in **references** subdirectory.
+- All images in **img** subdirectory of this repository.
+- Rough work/old files in **rough** subdirectory.
+- Model files in **models** subdirectory.
+    - _poly-reg.pkl_ (polynomial regression)
+	- _svm-reg.pkl_ (support vector machine regression)
+	- _scalerX.pkl_ (scaler pre-processing for SVM regression above)
+	- _neural-nw.h5_ (sequential neural network)
+- _requirements.txt_ requirements to run flask app in a virtual environment.
+
+(Please not that the steps to save these four files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
+
+## Virtual environment
 
 ## How to run the server instructions
 
 ## Docker instructions
-
-## venv ?
 
 ## Author
 Elizabeth Daly for HDip in Data Analytics 2019/2020.
