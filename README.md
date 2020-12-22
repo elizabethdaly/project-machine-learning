@@ -7,10 +7,12 @@ HDip Data Analytics 2020 Machine Learning &amp; Statistics Project
 
 ## Description
 
-This README describes work done for the Machine Learning and Statistics module project, due 8 January 2021. We have been asked to create a web service that uses machine learning to make predictions based on the data set provided. We should train a model (or more than one) that accurately predicts wind turbine power output from wind speed values. The web service responds with a predicted power values when a wind speed value is sent as a HTTP request. I have trained three models for the project:
+This README describes work done for the Machine Learning and Statistics module project, due 8 January 2021. We have been asked to create a web service that uses machine learning to make predictions based on the data set provided. We should train a model (or more than one) that accurately predicts wind turbine power output from wind speed values. The web service responds with a predicted power value when a wind speed value is sent as a HTTP request. I have trained three models for the project:
 - Model 1: polynomial regression performed with scikit-learn.
 - Model 2: regression performed using support vector machines in scikit-learn.
 - Model 3: a neural network with one hidden layer built using Keras/TensorFlow.
+
+PIC x 3 of model performance? Copy in from JNB.
 
 ## Getting started
 
@@ -40,6 +42,7 @@ Download and install the Anaconda distribution of Python from the link above. Mo
 ```pip install flask```
 4. Tell flask which server to use and run it
 ```set FLASK_APP==MLserver.py```
+and 
 ```pythom -m run flask```
 
 ## Project repository
@@ -53,6 +56,7 @@ A repository on GitHub exists as a remote repository. You can clone this reposit
 3. Choose "Clone with HTTPS".
 4. Open a terminal on your machine. Change the current working directory to the location where you want the cloned directory to be made.
 5. Type git clone, and then paste the URL you copied in 2 above.
+
 ```git clone https://github.com/elizabethdaly/project-machine-learning```
 6. Press enter to clone the repository to your machine.
 
@@ -61,7 +65,7 @@ One can view a static version of the notebook using [Jupyter Nbviewer](https://n
 
 ```https://github.com/elizabethdaly/tasks-machine-learning/blob/master/project-machine-learning.ipynb```
 
-### Files
+## Files
 - Data analysis and model training/evaluation in a single Jupyter notebook _project-machine-learning.ipynb_
 - Data set _powerproduction.csv_ in **data** subdirectory.
 - _index.html_ file for for the web server front end in **static** subdirectory.
@@ -76,7 +80,7 @@ One can view a static version of the notebook using [Jupyter Nbviewer](https://n
 	- _neural-nw.h5_ (sequential neural network)
 - _requirements.txt_ requirements to run flask app in a virtual environment.
 
-(Please not that the steps to save these four files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
+(Please not that the steps to save the model files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
 
 ## To run the flask app from inside a virtual environment
 1. Set up a Python virtual environment (VE) ```python -m venv venv``` The second venv is the directory which is created to hold the VE configuration.
@@ -87,7 +91,7 @@ Check to see if any packages are installed in the VE (there should be nothing at
 3. Run ```jupyter notebook``` if you wish to re-train models and save them again. Note that I did not need to install Jupyter notebook in this VE as it seems to know what kernel to use. Apparently, the set of kernels available are independent of what your VE is when you start Jupyter Notebook. You can check what kernels are available with ```jupyter kernelspec list```. I have one python3 kernel so I decided to just use it from my VE.
 
 4. Tell flask which server to use and run it
-```set FLASK_APP==MLserver.py```
+```set FLASK_APP==MLserver.py``` and 
 ```pythom -m run flask```
 
 5. You will get a series of error messages if any packages required by MLserver.py are not installed in the VE. Install them one by one.
@@ -103,7 +107,9 @@ Check to see if any packages are installed in the VE (there should be nothing at
 
 8. When finished, deactivate the VE ```.\venv\Scripts\deactivate.bat```
 
-9. Note that if you want to set up a copy of this VE, you can install all packages with ```pip install -r requirements.txt``` 
+9. Note that if you want to set up a copy of this VE, you can install all packages with ```pip install -r requirements.txt```
+
+10. Don't forget to add ```venv/``` to your .gitignore file! 
 
 ## To containerize the app with Docker
 
