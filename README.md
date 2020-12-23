@@ -12,11 +12,34 @@ This README describes work done for the Machine Learning and Statistics module p
 - Model 2: regression performed using support vector machines in scikit-learn.
 - Model 3: a neural network with one hidden layer built using Keras/TensorFlow.
 
-PIC x 3 of model performance? Copy in from JNB.
+![Model1](poly3.png)
+![Model2](SVRrbf.png)
+![Model3](neuralnw.png)
 
 ## Getting started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+## Project repository
+This project is hosted on [GitHub](https://github.com/) at 
+https://github.com/elizabethdaly/project-machine-learning
+
+### Instructions for cloning the repository
+A repository on GitHub exists as a remote repository. You can clone this repository to create a local copy on your computer by following these instructions:
+1. On GitHub, navigate to the main page of the repository https://github.com/elizabethdaly/project-machine-learning
+2. Under the repository name, click Clone or download.
+3. Choose "Clone with HTTPS" to copy the address.
+4. Open a terminal on your machine. Change the current working directory to the location where you want the cloned directory to be made.
+5. Type git clone, and then paste the URL you copied above.
+
+```git clone https://github.com/elizabethdaly/project-machine-learning```
+
+6. Press enter to clone the repository to your machine.
+
+### Static version of the notebook
+One can view a static version of the notebook using [Jupyter Nbviewer](https://nbviewer.jupyter.org/). Enter the GitHub url below to view the file.
+
+```https://github.com/elizabethdaly/tasks-machine-learning/blob/master/project-machine-learning.ipynb```
 
 ### Prerequisites
 - [Anaconda distribution of Python](https://www.anaconda.com/distribution/)
@@ -43,56 +66,36 @@ Download and install the Anaconda distribution of Python from the link above. Mo
 4. Tell flask which server to use and run it
 ```set FLASK_APP==MLserver.py```
 and 
-```pythom -m run flask```
-
-## Project repository
-This project is hosted on [GitHub](https://github.com/) at 
-https://github.com/elizabethdaly/project-machine-learning
-
-### Instructions for cloning the repository
-A repository on GitHub exists as a remote repository. You can clone this repository to create a local copy on your computer by following these instructions:
-1. On GitHub, navigate to the main page of the repository https://github.com/elizabethdaly/project-machine-learning
-2. Under the repository name, click Clone or download.
-3. Choose "Clone with HTTPS".
-4. Open a terminal on your machine. Change the current working directory to the location where you want the cloned directory to be made.
-5. Type git clone, and then paste the URL you copied in 2 above.
-
-```git clone https://github.com/elizabethdaly/project-machine-learning```
-6. Press enter to clone the repository to your machine.
-
-### Static version of the notebook
-One can view a static version of the notebook using [Jupyter Nbviewer](https://nbviewer.jupyter.org/). Enter the GitHub url below to view the file.
-
-```https://github.com/elizabethdaly/tasks-machine-learning/blob/master/project-machine-learning.ipynb```
+```python -m run flask```
 
 ## Files
-- Data analysis and model training/evaluation in a single Jupyter notebook _project-machine-learning.ipynb_
-- Data set _powerproduction.csv_ in **data** subdirectory.
-- _index.html_ file for for the web server front end in **static** subdirectory.
-- _MLserver.py_ file for flask server at repository top level.
+- Data analysis and model training/evaluation in a single Jupyter notebook **project-machine-learning.ipynb**
+- Data set **data/powerproduction.csv**.
+- **static/index.html** file for for the web server front end.
+- **MLserver.py** file for flask server at repository top level.
 - Some references in **references** subdirectory.
 - All images in **img** subdirectory of this repository.
 - Rough work/old files in **rough** subdirectory.
 - Model files in **models** subdirectory.
-    - _poly-reg.pkl_ (polynomial regression)
-	- _svm-reg.pkl_ (support vector machine regression)
-	- _scalerX.pkl_ (scaler pre-processing for SVM regression above)
-	- _neural-nw.h5_ (sequential neural network)
-- _requirements.txt_ requirements to run flask app in a virtual environment.
+    - **poly-reg.pkl** (polynomial regression)
+	- **svm-reg.pkl** (support vector machine regression)
+	- **scalerX.pkl** (scaler pre-processing for SVM regression above)
+	-**neural-nw.h5** (sequential neural network)
+- **requirements.txt** requirements to run flask app in a virtual environment.
 
-(Please not that the steps to save the model files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
+(Please note that the commands to save the model files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
 
 ## To run the flask app from inside a virtual environment
 1. Set up a Python virtual environment (VE) ```python -m venv venv``` The second venv is the directory which is created to hold the VE configuration.
 
 2. Activate that VE ```.\venv\Scripts\activate.bat```.
-Check to see if any packages are installed in the VE (there should be nothing at this stage) with ```pip freeze```
+Check to see if any packages are installed in the VE with ```pip freeze``` (there should be nothing at this stage) .
 
-3. Run ```jupyter notebook``` if you wish to re-train models and save them again. Note that I did not need to install Jupyter notebook in this VE as it seems to know what kernel to use. Apparently, the set of kernels available are independent of what your VE is when you start Jupyter Notebook. You can check what kernels are available with ```jupyter kernelspec list```. I have one python3 kernel so I decided to just use it from my VE.
+3. Run ```jupyter notebook``` if you wish to re-train models and save them again. Note that I did not need to install Jupyter notebook in this VE as it seems to know what kernel to use. Apparently, the set of kernels available is independent of what your VE is when you start Jupyter Notebook. You can check what kernels are available with ```jupyter kernelspec list```. I have one python3 kernel so I decided to just stick with it for my VE.
 
-4. Tell flask which server to use and run it
-```set FLASK_APP==MLserver.py``` and 
-```pythom -m run flask```
+4. Tell flask which server to use 
+```set FLASK_APP==MLserver.py``` and run it 
+```python -m run flask```
 
 5. You will get a series of error messages if any packages required by MLserver.py are not installed in the VE. Install them one by one.
 ```pip install numpy==1.19.3``` (Got errors with older version 1.19.4)
