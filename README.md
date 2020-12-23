@@ -12,7 +12,7 @@ This README describes work done for the Machine Learning and Statistics module p
 - Model 2: regression performed using support vector machines in scikit-learn.
 - Model 3: a neural network with one hidden layer built using Keras/TensorFlow.
 
-From the figures below, it's clear that Model 3, the neural network, does the best job over the full range of wind speed. Models 1 and 2 do an ok job provided wind speed is on the range 5 - 20 m/s. I would chose to use Model 3 as my final model.  
+From the figures below, it's clear that Model 3, the neural network, does the best job over the full range of wind speed. Models 1 and 2 do an ok job provided wind speed is on the range 5 - 20 m/s. I would use Model 3 as my final model.  
 
 <p >
   <img src="img/poly3.png" width="500" />
@@ -89,17 +89,17 @@ and
 
 ## Files
 - Data analysis and model training/evaluation in a single Jupyter notebook **project-machine-learning.ipynb**
-- Data set **data/powerproduction.csv**.
-- **static/index.html** file for for the web server front end.
+- Data set **data/powerproduction.csv**
+- **static/index.html** file for the web server front end.
 - **MLserver.py** file for flask server at repository top level.
 - Some references in **references** subdirectory.
-- All images in **img** subdirectory of this repository.
+- All images in **img** subdirectory.
 - Rough work/old files in **rough** subdirectory.
 - Model files in **models** subdirectory.
     - **poly-reg.pkl** (polynomial regression)
 	- **svm-reg.pkl** (support vector machine regression)
 	- **scalerX.pkl** (scaler pre-processing for SVM regression above)
-	-**neural-nw.h5** (sequential neural network)
+	- **neural-nw.h5** (sequential neural network)
 - **requirements.txt** requirements to run flask app in a virtual environment.
 
 (Please note that the commands to save the model files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
@@ -110,21 +110,21 @@ and
 2. Activate that VE ```.\venv\Scripts\activate.bat```.
 Check to see if any packages are installed in the VE with ```pip freeze``` (there should be nothing at this stage) .
 
-3. Run ```jupyter notebook``` if you wish to re-train models and save them again. Note that I did not need to install Jupyter notebook in this VE as it seems to know what kernel to use. Apparently, the set of kernels available is independent of what your VE is when you start Jupyter Notebook. You can check what kernels are available with ```jupyter kernelspec list```. I have one python3 kernel so I decided to just stick with it for my VE.
+3. Run ```jupyter notebook``` if you wish to re-train models and save them again. Note that I did not need to install Jupyter notebook in this VE as it seems to know what kernel to use. Apparently, the set of kernels available is independent of what your VE is when you start Jupyter notebook. You can check what kernels are available with ```jupyter kernelspec list```. I have one python3 kernel so I decided to just stick with it for my VE.
 
 4. Tell flask which server to use 
 ```set FLASK_APP==MLserver.py``` and run it 
 ```python -m run flask```
 
 5. You will get a series of error messages if any packages required by MLserver.py are not installed in the VE. Install them one by one.
-```pip install numpy==1.19.3``` (Got errors with older version 1.19.4)
-```pip install joblib``` (For importing scikit-learn learning models)
-```pi install sklearn``` (To make predictions from a scikit-learn model)
-```pip install tensorflow``` (To import tensorflow models - this step took about 10 minutes and I had make a few attempts.)
+- ```pip install numpy==1.19.3``` (Got errors with older version 1.19.4)
+- ```pip install joblib``` (For importing scikit-learn learning models)
+- ```pip install sklearn``` (To make predictions from a scikit-learn model)
+- ```pip install tensorflow``` (To import tensorflow models - this step took about 10 minutes and I had make a few attempts.)
 
 6. Repeat step 4. to run the server and interact with the front end at http://127.0.0.1:5000/
 
-7. Save a list of required packages to a file _requirements.txt_
+7. Save a list of required packages to a file **requirements.txt**
 ```pip freeze > requirements.txt```
 
 8. When finished, deactivate the VE ```.\venv\Scripts\deactivate.bat```
@@ -134,6 +134,23 @@ Check to see if any packages are installed in the VE with ```pip freeze``` (ther
 10. Don't forget to add ```venv/``` to your .gitignore file! 
 
 ## To containerize the app with Docker
+
+Docker allows one to gather everything required for an  application in images & containers. The first step is to build a Docker image - a read-only template that contains a set of instructions for creating a container that can run on the Docker platform. A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. Containers are dependent on images, and use them to construct a run-time environment and run an application. The commands required to build a Docker image are listed in the file **Dockerfile** in this repository. I edited this file to tell Docker my exact version of Python (3.8.5) and the name of my flask app **MLserver.py**
+
+I installed Docker Desktop for Windows (Home 64 bit) from [!here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). I then had to install the Linux Containers WSL 2 backend from [!here](https://docs.docker.com/docker-for-windows/wsl/). Check docker version with ```docker --version``` Mine: Docker version 20.10.0, build 7287ab3
+
+To run the application via Docker from the command line:
+
+1. ```docker build -t model-server .``` to build a docker image called model-server.
+2. ```docker image ls``` to list images.
+3. ```docker run -d -p 5000:5000 model-server``` to create an instance of the image in a container.
+4. Once the container is running, access the web service on your localhost at http://127.0.0.1:5000/ to get predictions of power output for input wind speeds.
+5. ```docker container ls``` to list containers by ID.
+6. ```docker kill ID``` to stop a container with given ID
+7. ```docker container ls -a``` to check that the container is really gone. If not do
+8. ```docker kill ID```
+
+[1] stackify, [!Docker Image vs Container: Everything You Need to Know](https://stackify.com/docker-image-vs-container-everything-you-need-to-know/)
 
 ## Author
 Elizabeth Daly for HDip in Data Analytics 2019/2020.
