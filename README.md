@@ -14,14 +14,17 @@ This README describes work done for the Machine Learning and Statistics module p
 
 <p align="middle">
   <img src="img/poly3.png" width="500" />
+  <figcaption>Model 1. Third order polynomial regression.</figcaption>
 </p>
 
 <p align="middle">
   <img src="img/SVRrbf.png" width="500" /> 
+  <figcaption>Model 2. Support vector machine regression.</figcaption>
 </p>
 
 <p align="middle">
   <img src="img/neuralnw.png" width="500" />
+  <figcaption>Model 3. Sequential neural network.</figcaption>
 </p>
 
 <!--
