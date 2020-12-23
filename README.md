@@ -137,7 +137,7 @@ Check to see if any packages are installed in the VE with ```pip freeze``` (ther
 
 Docker allows one to gather everything required for an  application in images & containers. The first step is to build a Docker image - a read-only template that contains a set of instructions for creating a container that can run on the Docker platform. A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. Containers are dependent on images, and use them to construct a run-time environment and run an application. The commands required to build a Docker image are listed in the file **Dockerfile** in this repository. I edited this file to tell Docker my exact version of Python (3.8.5) and the name of my flask app **MLserver.py**
 
-I installed Docker Desktop for Windows (Home 64 bit) from [!here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). I then had to install the Linux Containers WSL 2 backend from [!here](https://docs.docker.com/docker-for-windows/wsl/). Check docker version with ```docker --version``` Mine: Docker version 20.10.0, build 7287ab3
+I installed Docker Desktop for Windows (Home 64 bit) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). I then had to install the Linux Containers WSL 2 backend from [here](https://docs.docker.com/docker-for-windows/wsl/). Check docker version with ```docker --version``` Mine: Docker version 20.10.0, build 7287ab3
 
 To run the application via Docker from the command line:
 
@@ -150,7 +150,18 @@ To run the application via Docker from the command line:
 7. ```docker container ls -a``` to check that the container is really gone. If not do
 8. ```docker kill ID```
 
-[1] stackify, [!Docker Image vs Container: Everything You Need to Know](https://stackify.com/docker-image-vs-container-everything-you-need-to-know/)
+Note: My docker image model-server took aver 20 minutes to build, most of that time seemed to be spent installing TensorFlow. The file is big.
+
+```docker image ls```
+REPOSITORY | TAG | IMAGE ID | CREATED | SIZE
+--- | --- | --- | --- | --- 
+model-server | latest | 84d96ad68fdc | 6 hours ago | 3.45GB
+
+```docker container ls```
+CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES
+503ffc3ecb9e | model-server | "/bin/sh -c 'flask r…" | 10 seconds ago | Up 8 seconds | 0.0.0.0:5000->5000/tcp | fervent_lederberg
+
+[1] stackify, [Docker Image vs Container: Everything You Need to Know](https://stackify.com/docker-image-vs-container-everything-you-need-to-know/)
 
 ## Author
 Elizabeth Daly for HDip in Data Analytics 2019/2020.
