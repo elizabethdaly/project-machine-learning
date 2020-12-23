@@ -60,7 +60,7 @@ One can view a static version of the notebook using [Jupyter Nbviewer](https://n
 
 ```https://github.com/elizabethdaly/tasks-machine-learning/blob/master/project-machine-learning.ipynb```
 
-### Prerequisites
+## Prerequisites
 - [Anaconda distribution of Python](https://www.anaconda.com/distribution/)
 - [Python Software Foundation](https://www.python.org/)
 - [Project Jupyter](https://jupyter.org/)
