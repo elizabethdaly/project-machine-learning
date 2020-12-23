@@ -12,7 +12,7 @@ This README describes work done for the Machine Learning and Statistics module p
 - Model 2: regression performed using support vector machines in scikit-learn.
 - Model 3: a neural network with one hidden layer built using Keras/TensorFlow.
 
-From the figures below, it's clear that Model 3, the neural network, does the best job over the full range of wind speed.Models 1 and 2 do an ok job provided wind speed is on the range 5 - 20 m/s. I would chose to use Model 3 as my final model.  
+From the figures below, it's clear that Model 3, the neural network, does the best job over the full range of wind speed. Models 1 and 2 do an ok job provided wind speed is on the range 5 - 20 m/s. I would chose to use Model 3 as my final model.  
 
 <p >
   <img src="img/poly3.png" width="500" />
