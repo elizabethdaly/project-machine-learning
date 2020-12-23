@@ -13,9 +13,15 @@ This README describes work done for the Machine Learning and Statistics module p
 - Model 3: a neural network with one hidden layer built using Keras/TensorFlow.
 
 <p align="middle">
-  <img src="img/poly3.png" width="300" />
-  <img src="img/SVRrbf.png" width="300" /> 
-  <img src="img/neuralnw.png" width="300" />
+  <img src="img/poly3.png" width="500" />
+</p>
+
+<p align="middle">
+  <img src="img/SVRrbf.png" width="500" /> 
+</p>
+
+<p align="middle">
+  <img src="img/neuralnw.png" width="500" />
 </p>
 
 <!--
