@@ -12,7 +12,7 @@ This README describes work done for the Machine Learning and Statistics module p
 - Model 2: regression performed using support vector machines in scikit-learn.
 - Model 3: a neural network with one hidden layer built using Keras/TensorFlow.
 
-From the figures below, it's clear that Model 3, the neural network, does the best job over the full range of wind speed. Models 1 and 2 do an ok job provided wind speed is on the range 5 - 20 m/s. I would use Model 3 as my final model.  
+From the figures below, it's clear that Model 3, the neural network, does the best job over the full range of wind speed. Models 1 and 2 do an ok job provided wind speed is in the range 5 - 20 m/s. I would use Model 3 as my final model.  
 
 <p >
   <img src="img/poly3.png" width="500" />
@@ -37,7 +37,11 @@ From the figures below, it's clear that Model 3, the neural network, does the be
 
 ## Getting started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. The web server looks like this:
+
+<p>
+  <img src="img/front-end.JPG" width="800" />
+</p>
 
 ## Project repository
 This project is hosted on [GitHub](https://github.com/) at 
@@ -150,7 +154,7 @@ To run the application via Docker from the command line:
 7. ```docker container ls -a``` to check that the container is really gone. If not do
 8. ```docker kill ID```
 
-Note: My docker image model-server took aver 20 minutes to build, most of that time seemed to be spent installing TensorFlow. The file is big.
+Note: My docker image model-server took over 20 minutes to build, most of that time seemed to be spent installing TensorFlow. The file is big.
 
 ```docker image ls```
 REPOSITORY | TAG | IMAGE ID | CREATED | SIZE
