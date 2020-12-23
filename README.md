@@ -159,6 +159,7 @@ model-server | latest | 84d96ad68fdc | 6 hours ago | 3.45GB
 
 ```docker container ls```
 CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES
+--- | --- | --- | --- | --- | --- | ---
 503ffc3ecb9e | model-server | "/bin/sh -c 'flask r…" | 10 seconds ago | Up 8 seconds | 0.0.0.0:5000->5000/tcp | fervent_lederberg
 
 [1] stackify, [Docker Image vs Container: Everything You Need to Know](https://stackify.com/docker-image-vs-container-everything-you-need-to-know/)
