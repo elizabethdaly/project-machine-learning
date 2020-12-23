@@ -12,10 +12,17 @@ This README describes work done for the Machine Learning and Statistics module p
 - Model 2: regression performed using support vector machines in scikit-learn.
 - Model 3: a neural network with one hidden layer built using Keras/TensorFlow.
 
+<p align="middle">
+  <img src="img/poly3.png" width="200" />
+  <img src="img/SVRrbf.png" width="200" /> 
+  <img src="img/neuralnw.png" width="200" />
+</p>
 
+<!--
 ![Model1](img/poly3.png)
 ![Model2](img/SVRrbf.png)
 ![Model3](img/neuralnw.png)
+-->
 
 ## Getting started
 
