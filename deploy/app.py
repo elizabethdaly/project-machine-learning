@@ -19,14 +19,14 @@ from tensorflow.keras.models import load_model
 #import sklearn
 
 # Import my polnomial regression model-in same dir
-polyreg = joblib.load("poly-reg.pkl")
+polyreg = joblib.load("/home/elizabethdaly/mysite/poly-reg.pkl")
 
 # Import my SVM regression model and the scaler to apply to x before predict.
-svmreg = joblib.load("svm-reg.pkl")
-scaler = joblib.load("scalerX.pkl")
+svmreg = joblib.load("/home/elizabethdaly/mysite/svm-reg.pkl")
+scaler = joblib.load("/home/elizabethdaly/mysite/scalerX.pkl")
 
 # Import my neural network model.
-model = load_model("neural-nw.h5")
+#model = load_model("/home/elizabethdaly/mysite/neural-nw.h5")
 
 ########## Create a new web application ##########
 app = fl.Flask(__name__)
@@ -58,15 +58,13 @@ def model2(w):
     # Make the prediction using our model.
     p = svmreg.predict(scaler.transform([[w]]))
     return {"value": str(p[0])} # Object must be a string.
-    
+   
 ########## Tell flask to make model 3 available at /model3 ##########
 # model 3 is a sequential neural network
 # file: neural-nw.h5
 # How to get the data into this function? Via the url, goes with request.
-@app.route('/api/model3/<int:w>')
-# curl test at 127.0.0.1:5000/api/model3/5 ok
-
-def model3(w):
-    # Make the prediction using our model
-    p = model.predict([[w]]) # TypeError: Object of type ndarray is not JSON serializable if try to return this
-    return {"value": str(p[0][0])} # Object must be a string
+# Comment out as errors on PA
+#@app.route('/api/model3/<int:w>')
+#def model3(w):
+#    p = model.predict([[w]]) # TypeError: Object of type ndarray is not JSON serializable if try to return this
+#    return {"value": str(p[0][0])} # Object must be a string
