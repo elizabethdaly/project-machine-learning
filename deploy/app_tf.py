@@ -62,7 +62,7 @@ def model2(w):
 # file: neural-nw.h5
 # How to get the data into this function? Via the url, goes with request.
 # Comment out as errors on PA
-#@app.route('/api/model3/<int:w>')
-#def model3(w):
-#    p = model.predict([[w]]) # TypeError: Object of type ndarray is not JSON serializable if try to return this
-#    return {"value": str(p[0][0])} # Object must be a string
+@app.route('/api/model3/<int:w>')
+def model3(w):
+    p = model.predict([[w]]) # TypeError: Object of type ndarray is not JSON serializable if try to return this
+    return {"value": str(p[0][0])} # Object must be a string
