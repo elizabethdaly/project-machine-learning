@@ -96,15 +96,16 @@ and
 - Data set **data/powerproduction.csv**
 - **static/index.html** file for the web server front end.
 - **MLserver.py** file for flask server at repository top level.
-- Some references in **references** subdirectory.
-- All images in **img** subdirectory.
-- Rough work/old files in **rough** subdirectory.
+- **deploy/app.py** edited flask app for hosting on PythonAnywhere
 - Model files in **models** subdirectory.
     - **poly-reg.pkl** (polynomial regression)
 	- **svm-reg.pkl** (support vector machine regression)
 	- **scalerX.pkl** (scaler pre-processing for SVM regression above)
 	- **neural-nw.h5** (sequential neural network)
 - **requirements.txt** requirements to run flask app in a virtual environment.
+- Some references in **references** subdirectory.
+- All images in **img** subdirectory.
+- Rough work/old files in **rough** subdirectory.
 
 (Please note that the commands to save the model files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
 
@@ -121,7 +122,7 @@ Check to see if any packages are installed in the VE with ```pip freeze``` (ther
 ```python -m run flask```
 
 5. You will get a series of error messages if any packages required by MLserver.py are not installed in the VE. Install them one by one.
-- ```pip install numpy==1.19.3``` (Got errors with older version 1.19.4)
+- ```pip install numpy==1.19.3``` (Got errors with newer version 1.19.4)
 - ```pip install joblib``` (For importing scikit-learn learning models)
 - ```pip install sklearn``` (To make predictions from a scikit-learn model)
 - ```pip install tensorflow``` (To import tensorflow models - this step took about 10 minutes and I had make a few attempts.)
@@ -167,6 +168,24 @@ CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES
 503ffc3ecb9e | model-server | "/bin/sh -c 'flask r…" | 10 seconds ago | Up 8 seconds | 0.0.0.0:5000->5000/tcp | fervent_lederberg
 
 [1] stackify, [Docker Image vs Container: Everything You Need to Know](https://stackify.com/docker-image-vs-container-everything-you-need-to-know/)
+
+## To host the Flask app on eu.pythonanywhere.com
+This Flask app is hosted at: http://elizabethdaly.eu.pythonanywhere.com/
+
+It was a long and torturous process to get this working. Even now, the model which is based on TensorFlow (Model 3) is not working on the hosted web page, but Models 1 & 2, based on scikit-learn, are working fine. I'll summarize what I did briefly.
+
+1. As I am using Python 3.8.5, I first created a new Web App on pythonanywhere (PA) based on Flask and Python 3.8. I uploaded all my files to the site and edited the wsgi config file to point to my flask app (**app.py**). This file is just a slightly edited version of MLserver.py with some changes specific to PA. I created a Python 3.8 virtual environment on PA and, one by one, pip installed the modules I needed - the error log on PA tells you what's missing when you try to load the app. All was going well until I attempted to install tensorflow. It turns out that it is too big to install on a free PA account, and I got error messages about disk quota being exceeded.
+
+2. PA does have some pre-installed packages (batteries Included), that are possible to use without the need to create a virtual environment. I saw that tensorflow comes installed for Python 3.7, so I created a new Web App based on Python 3.7 and attempted to run the app again without a virtual environment. This time I got error messages referring to *sklearn.linear_model._base*, which I tracked down to a discrepancy between the PA version of scikit=learm==0.21.3 and my own version used to create the models, scikit-learn==0.23.2
+
+3. So I created a new Python 3.7 virtual environment with a flag which allows access to the system site packages from within it. 
+```mkvirtualenv venv37 --python=python3.7 --system-site-packages``` 
+I then upgraded the version of scikit-learn to match my own and the sklearn error disappeared.
+```pip install --user --upgrade scikit-learn==0.23.3 ```
+
+4. I still had file not found errors relating to my models.
+
+[2.] Python Anywhere, [Batteries Included](https://www.pythonanywhere.com/batteries_included/)
 
 ## Author
 Elizabeth Daly for HDip in Data Analytics 2019/2020.
