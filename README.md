@@ -78,19 +78,6 @@ One can view a static version of the notebook using [Jupyter Nbviewer](https://n
 - [Docker](https://www.docker.com/resources/what-container)
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
-### Installing packages and running the server
-Download and install the Anaconda distribution of Python from the link above. Most packages (Jupyter notebook, Pandas, matplotlib, NumPy, and Scikit-learn) come as part of that distribution. I used the Python package management system (PIP) to install any additional packages, such as TensorFlow and Flask, as follows:
-1. First make sure you are using an up-to-date version of pip
-```python -m pip install --upgrade pip```
-2. Install TensorFlow 
-```pip install tensorflow```
-3. Install Flask
-```pip install flask```
-4. Tell flask which server to use and run it
-```set FLASK_APP==MLserver.py```
-and 
-```python -m run flask```
-
 ## Files
 - Data analysis and model training/evaluation in a single Jupyter notebook **project-machine-learning.ipynb**
 - Data set **data/powerproduction.csv**
@@ -109,8 +96,21 @@ and
 
 (Please note that the commands to save the model files have been commented out in the Jupyter notebook so that my final models are not overwritten. If you wish to resave, just remove comments.)
 
+## Installing packages and running the server
+Download and install the Anaconda distribution of Python from the link above. Most packages (Jupyter notebook, Pandas, matplotlib, NumPy, and Scikit-learn) come as part of that distribution. I used the Python package management system (PIP) to install any additional packages, such as TensorFlow and Flask, as follows:
+1. First make sure you are using an up-to-date version of pip
+```python -m pip install --upgrade pip```
+2. Install TensorFlow 
+```pip install tensorflow```
+3. Install Flask
+```pip install flask```
+4. Tell flask which server to use and run it
+```set FLASK_APP==MLserver.py```
+and 
+```python -m run flask```
+
 ## To run the flask app from inside a virtual environment
-1. Set up a Python virtual environment (VE) ```python -m venv venv``` The second venv is the directory which is created to hold the VE configuration.
+1. Set up a Python virtual environment (VE) ```python -m venv venv``` The second venv is the name of the directory which is created to hold the VE configuration.
 
 2. Activate that VE ```.\venv\Scripts\activate.bat```.
 Check to see if any packages are installed in the VE with ```pip freeze``` (there should be nothing at this stage) .
@@ -172,20 +172,39 @@ CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES
 ## To host the Flask app on eu.pythonanywhere.com
 This Flask app is hosted at: http://elizabethdaly.eu.pythonanywhere.com/
 
-It was a long and torturous process to get this working. Even now, the model which is based on TensorFlow (Model 3) is not working on the hosted web page, but Models 1 & 2, based on scikit-learn, are working fine. I'll summarize what I did briefly.
+It was a long and torturous process to get this working. Even now, the model which is based on TensorFlow (Model 3) is not working on the hosted web page although no errors are flagged. Models 1 & 2, based on scikit-learn, are working fine. I'll summarize what I did briefly.
 
-1. As I am using Python 3.8.5, I first created a new Web App on pythonanywhere (PA) based on Flask and Python 3.8. I uploaded all my files to the site and edited the wsgi config file to point to my flask app (**app.py**). This file is just a slightly edited version of MLserver.py with some changes specific to PA. I created a Python 3.8 virtual environment on PA and, one by one, pip installed the modules I needed - the error log on PA tells you what's missing when you try to load the app. All was going well until I attempted to install tensorflow. It turns out that it is too big to install on a free PA account, and I got error messages about disk quota being exceeded.
+1. As I am using Python 3.8.5, I first created a new Web App on pythonanywhere (PA) based on Flask and Python 3.8. I uploaded all my files to the site and edited the wsgi config file to point to my flask app (**app.py**). This file is just a slightly edited version of MLserver.py with some changes specific to PA. I created a Python 3.8 virtual environment on PA and, one by one, pip installed the modules I needed - the error log on PA tells you what's missing when you try to load the app. All was going well until I attempted to install tensorflow. It turns out that it is too big to install on a free PA account, and I got error messages about my disk quota being exceeded.
 
-2. PA does have some pre-installed packages (batteries Included), that are possible to use without the need to create a virtual environment. I saw that tensorflow comes installed for Python 3.7, so I created a new Web App based on Python 3.7 and attempted to run the app again without a virtual environment. This time I got error messages referring to *sklearn.linear_model._base*, which I tracked down to a discrepancy between the PA version of scikit=learm==0.21.3 and my own version used to create the models, scikit-learn==0.23.2
+2. PA does have some pre-installed packages (called Batteries Included), that are possible to use without the need to create a virtual environment. I saw that tensorflow comes installed for Python 3.7, so I created a new Web App based on Python 3.7 and attempted to run the app again without a virtual environment. This time I got error messages referring to *sklearn.linear_model._base*, which I tracked down to a discrepancy between the PA version of scikit=learm==0.21.3 and my own version used to create the models, scikit-learn==0.23.2
 
-3. So I created a new Python 3.7 virtual environment with a flag which allows access to the system site packages from within it. 
+3. I created a new Python 3.7 virtual environment with a flag which allows access to the system site packages from within it. 
 ```mkvirtualenv venv37 --python=python3.7 --system-site-packages``` 
 I then upgraded the version of scikit-learn to match my own and the sklearn error disappeared.
 ```pip install --user --upgrade scikit-learn==0.23.3 ```
 
-4. I still had file not found errors relating to my models.
+4. I still had "file not found" errors relating to my models although I placed all model files in the same location as the app itself on PA. These errors were resolved by providing the full path to the model files when loading them, not just a relative path.
 
-[2.] Python Anywhere, [Batteries Included](https://www.pythonanywhere.com/batteries_included/)
+5. The last error I had to resolve with the PA Web App was related to TensorFlow. The error log showed 
+*KeyError: 'sample_weight_mode'* at the point when the tensorflow model is being loaded.
+*model = load_model("/home/elizabethdaly/mysite/neural-nw.h5")*
+
+I was able to get rid of the error (although I'm not sure how it affects the loaded model) by adding a flag to load_model:
+
+*model = load_model("/home/elizabethdaly/mysite/neural-nw.h5", compile = False)*
+
+6. There are no errors when I load my flask app on PA, but the **Model 3** button on the web page does nothing as I have commented out this part of **app.py**. If I don't comment out that app.route the web page hangs although I can see no errors in Chrome. I created the model on my own machine using tensorflow==2.4.0, and PA has tensorflow==2.0.0. I suspect that if I could install the newer version of tensorflow onto my PA virtual environment that the error might be resolved. 
+
+7. I found some discussion of the *KeyError* in [3] below, but not related to hosting, just saving and loading in different sessions. I'll continue to look into the issue in a second flask app file **app_tf.py** that I have uploaded to PA. There are no errors generated on PA when I load the Web App, but the server log has some suspicious messages about tensorflow compilers. In the PA access log I can see the HTTP requests like 
+  - "GET /api/model1/1 HTTP/1.1" 200
+  - "GET /api/model2/2 HTTP/1.1" 200
+  - "GET /api/model3/12 HTTP/1.1" 499 so, something is up here.
+
+When I searched for 499 error code I find posts about client closing connection before server responded. Actually, if I wait long enough after clicking the Model 3 button I do get a 504 Gateway Timeout error in Chrome. For now, the Model 3 button does nothing on my hosted web page.
+
+[2] Python Anywhere, [Batteries Included](https://www.pythonanywhere.com/batteries_included/)
+
+[3] github.com/keras-team/keras, [KeyError: 'sample_weight_mode' #14040](https://github.com/keras-team/keras/issues/14040)
 
 ## Author
 Elizabeth Daly for HDip in Data Analytics 2019/2020.
